@@ -1,0 +1,56 @@
+CREATE DATABASE db_ecosystem;
+
+USE db_ecosystem;
+
+CREATE TABLE tipoUsuario(
+Id BINARY(16) NOT NULL,
+Nome VARCHAR(255) NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE endereco(
+Id BINARY (16) NOT NULL, 
+Logradouro VARCHAR (255) NOT NULL, 
+Numero VARCHAR (20) NOT NULL,
+Bairro VARCHAR (255) NOT NULL,
+Cidade VARCHAR (255) NOT NULL,
+Estado VARCHAR (255) NOT NULL,
+Cep VARCHAR (20) NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE categoria(
+Id BINARY (16) NOT NULL,
+Nome VARCHAR (255) NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE tipoStatus(
+	Id BINARY (16) NOT NULL,
+    Nome VARCHAR (255) NOT NULL,
+    PRIMARY KEY (Id)
+);
+
+	CREATE TABLE disponibilidade(
+		Id BINARY (16) NOT NULL,
+		Nome VARCHAR (255) NOT NULL,
+		PRIMARY KEY (Id)
+	);
+
+CREATE TABLE usuario(
+Id BINARY(16) NOT NULL,
+Nome VARCHAR(255) NOT NULL,
+Cpf_Cnpj VARCHAR(255) NOT NULL,
+Email VARCHAR(255) NOT NULL UNIQUE,
+Genero CHAR(100),
+Telefone VARCHAR(100),
+Senha VARCHAR(20),
+TipoUsuarioId BINARY(20),
+EnderecoID BINARY(20),
+PRIMARY KEY (Id),
+FOREIGN KEY (TipoUsuarioId) REFERENCES tipoUsuario(Id),
+FOREIGN KEY (EnderecoId) REFERENCES endereco(id)
+);
+
+
+
