@@ -1,4 +1,5 @@
 CREATE DATABASE db_ecosystem;
+-- DROP DATABASE db_ecosystem;
 
 USE db_ecosystem;
 
@@ -85,33 +86,38 @@ FOREIGN KEY (CategoriaId) REFERENCES categoria (Id)
 
 
 INSERT INTO tipoStatus 
-VALUES ( UUID_TO_BIN(UUID()), "AGUARDANDO COLETA");
+VALUES ( (UUID_TO_BIN(UUID())), 
+"AGUARDANDO COLETA"),
+( (UUID_TO_BIN(UUID())), 
+"COLETA AGENDADA"),
+( (UUID_TO_BIN(UUID())), 
+"COLETA CANCELADA"),
+( (UUID_TO_BIN(UUID())), 
+"COLETA FINALIZADA");
+
+INSERT INTO tipoUsuario
+VALUES ( (UUID_TO_BIN(UUID())), 
+"ADMIN"),
+( (UUID_TO_BIN(UUID())), 
+"DOADOR"),
+( (UUID_TO_BIN(UUID())), 
+"COLETOR");
+
+INSERT INTO categoria
+VALUES ( (UUID_TO_BIN(UUID())), 
+"INFORMATICA"),
+( (UUID_TO_BIN(UUID())), 
+"TELEFONIA"),
+( (UUID_TO_BIN(UUID())), 
+"PECAS E INFORMATICA");
 
 
-SELECT * FROM tipoStatus;
+-- VALIDACAO
+-- SELECT * FROM tipoStatus;
+-- SELECT * FROM tipousuario;
+-- SELECT * FROM categoria;
 
-DELETE FROM tipoStatus;
-
--- INSERT INTO tb_usuario VALUES (
--- 	UUID_TO_BIN(UUID()),
---     "Jessica",
---     "jessica@email.com",
---     "senai@134",
---     "Rua Amadis, 50",
---     "04221000",
---     0
--- );
-
-ÀGUARDANDO COLETA
-COLETA AGENDADA
-COLETA CANCELADD
-COLETA FINALIZADA
-
-ADMIN
-DOADOR 
-COLETAR 
-
-CATEGORIA
-INFORMATIVA
-TELEFONIA
-PECAS E ACESSORIOS
+-- ZERAR A TABELA
+-- DELETE FROM tipoStatus;
+-- DELETE FROM tipoUsuario;
+-- DELETE FROM categoria;
