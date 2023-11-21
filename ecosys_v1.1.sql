@@ -1,0 +1,133 @@
+CREATE DATABASE db_ecosystem;
+-- DROP DATABASE db_ecosystem;
+
+USE db_ecosystem;
+
+CREATE TABLE tipoUsuario(
+Id BINARY(16) NOT NULL,
+Nome VARCHAR(255) NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE endereco(
+Id BINARY (16) NOT NULL, 
+Logradouro VARCHAR (255) NOT NULL, 
+Numero VARCHAR (20) NOT NULL,
+Bairro VARCHAR (255) NOT NULL,
+Cidade VARCHAR (255) NOT NULL,
+Estado VARCHAR (255) NOT NULL,
+Cep VARCHAR (20) NOT NULL,
+DataCriacao DATETIME,
+DataModificacao DATETIME,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE categoria(
+Id BINARY (16) NOT NULL,
+Nome VARCHAR (255) NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE tipoStatus(
+	Id BINARY (16) NOT NULL,
+    Nome VARCHAR (255) NOT NULL,
+    PRIMARY KEY (Id)
+);
+
+
+CREATE TABLE usuario(
+Id BINARY(16) NOT NULL,
+Nome VARCHAR(255) NOT NULL,
+Cpf_Cnpj VARCHAR(255) NOT NULL,
+Email VARCHAR(255) NOT NULL UNIQUE,
+Genero CHAR(100),
+Telefone VARCHAR(100),
+Senha VARCHAR(20),
+TipoUsuarioId BINARY(20),
+EnderecoID BINARY(20),
+DataCriacao DATETIME,
+DataModificacao DATETIME,
+PRIMARY KEY (Id),
+FOREIGN KEY (TipoUsuarioId) REFERENCES tipoUsuario(Id),
+FOREIGN KEY (EnderecoId) REFERENCES endereco(Id)
+);
+
+CREATE TABLE anuncio(
+Id BINARY (16) NOT NULL,
+Titulo VARCHAR (255) NOT NULL,
+Url_imagem VARCHAR (255) NOT NULL,
+UsuarioId BINARY (16) NOT NULL,
+TipoStatusId BINARY (16) NOT NULL,
+Disponibilidade VARCHAR (255) NOT NULL,
+Periodo VARCHAR (255) NOT NULL, 
+DataCriacao DATETIME,
+DataModificacao DATETIME,
+PRIMARY KEY (Id),
+FOREIGN KEY (UsuarioId) REFERENCES usuario (Id),
+FOREIGN KEY (TipoStatusId) REFERENCES tipoStatus (Id)
+);
+
+CREATE TABLE coleta (
+Id BINARY (16) NOT NULL,
+Disponibilidade TEXT (255),
+AnuncioId BINARY (16) NOT NULL, 
+UsuarioId BINARY (16) NOT NULL,
+TipoStatusId BINARY (16) NOT NULL,
+DataCriacao DATETIME,
+DataModificacao DATETIME,
+PRIMARY KEY (Id),
+FOREIGN KEY (AnuncioId) REFERENCES anuncio (Id),
+FOREIGN KEY (UsuarioId) REFERENCES usuario (Id),
+FOREIGN KEY (TipoStatusId) REFERENCES tipostatus (Id)
+);
+
+CREATE TABLE produto (
+Id BINARY (16) NOT NULL,
+Nome VARCHAR (255) NOT NULL,
+Quantidade VARCHAR (255) NOT NULL,
+AnuncioId BINARY (16) NOT NULL,
+CategoriaId BINARY (16) NOT NULL,
+DataCriacao DATETIME,
+DataModificacao DATETIME,
+PRIMARY KEY (Id),
+FOREIGN KEY (AnuncioId) REFERENCES anuncio (Id),
+FOREIGN KEY (CategoriaId) REFERENCES categoria (Id)
+);
+
+
+INSERT INTO tipoStatus 
+VALUES ( (UUID_TO_BIN(UUID())), 
+"AGUARDANDO COLETA"),
+( (UUID_TO_BIN(UUID())), 
+"COLETA AGENDADA"),
+( (UUID_TO_BIN(UUID())), 
+"COLETA CANCELADA"),
+( (UUID_TO_BIN(UUID())), 
+"COLETA FINALIZADA");
+
+INSERT INTO tipoUsuario
+VALUES ( (UUID_TO_BIN(UUID())), 
+"ADMIN"),
+( (UUID_TO_BIN(UUID())), 
+"DOADOR"),
+( (UUID_TO_BIN(UUID())), 
+"COLETOR");
+
+INSERT INTO categoria
+VALUES ( (UUID_TO_BIN(UUID())), 
+"INFORMATICA"),
+( (UUID_TO_BIN(UUID())), 
+"TELEFONIA"),
+( (UUID_TO_BIN(UUID())), 
+"PECAS E INFORMATICA");
+
+
+-- VALIDACAO
+-- SELECT * FROM tipoStatus;
+-- SELECT * FROM tipousuario;
+-- SELECT * FROM categoria;
+
+-- ZERAR A TABELA
+-- DELETE FROM tipoStatus;
+-- DELETE FROM tipoUsuario;
+-- DELETE FROM categoria;
